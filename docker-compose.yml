@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  # Base de datos MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: kiosco-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: kiosco_db
+      MYSQL_USER: kiosco_user
+      MYSQL_PASSWORD: kiosco_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - kiosco-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    command: --default-authentication-plugin=mysql_native_password --bind-address=0.0.0.0
+
+  # Aplicación Java
+  kiosco-app:
+    build: .
+    container_name: kiosco-app
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=kiosco_db
+      - DB_USER=kiosco_user
+      - DB_PASSWORD=kiosco_password
+    networks:
+      - kiosco-network
+    volumes:
+      - ./logs:/app/logs
+
+  # phpMyAdmin para administrar la base de datos (opcional)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: kiosco-phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: kiosco_user
+      PMA_PASSWORD: kiosco_password
+    ports:
+      - "8080:80"
+    networks:
+      - kiosco-network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  kiosco-network:
+    driver: bridge

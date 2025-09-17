@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <!-- Configuración de la base de datos para Docker -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://mysql:3306/kiosco_db?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true</property>
+        <property name="hibernate.connection.username">kiosco_user</property>
+        <property name="hibernate.connection.password">kiosco_password</property>
+        
+        <!-- Configuración del dialecto -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        
+        <!-- Configuración de conexión -->
+        <property name="hibernate.connection.pool_size">10</property>
+        <property name="hibernate.connection.autocommit">false</property>
+        
+        <!-- Configuración de cache -->
+        <property name="hibernate.cache.use_second_level_cache">false</property>
+        <property name="hibernate.cache.use_query_cache">false</property>
+        
+        <!-- Configuración de logging -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        
+        <!-- Configuración de esquema -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        
+        <!-- Configuración para Docker -->
+        <property name="hibernate.connection.provider_disables_autocommit">true</property>
+        <property name="hibernate.connection.isolation">2</property>
+        
+        <!-- Mapeo de entidades -->
+        <mapping class="com.fortunato.sistema.modelo.Producto"/>
+        <mapping class="com.fortunato.sistema.modelo.Venta"/>
+        <mapping class="com.fortunato.sistema.modelo.DetalleVenta"/>
+        <mapping class="com.fortunato.sistema.modelo.Caja"/>
+        
+    </session-factory>
+</hibernate-configuration>
