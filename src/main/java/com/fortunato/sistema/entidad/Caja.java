@@ -1,4 +1,4 @@
-package com.fortunato.sistema.persistencia.entidad;
+package com.fortunato.sistema.entidad;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
@@ -147,4 +147,3 @@ public class Caja {
                 '}';
     }
 }
-

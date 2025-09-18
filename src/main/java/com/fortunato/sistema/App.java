@@ -1,9 +1,10 @@
 package com.fortunato.sistema;
 
-import com.fortunato.sistema.persistencia.entidad.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import com.fortunato.sistema.entidad.*;
 
 import java.math.BigDecimal;
 import java.util.List;
