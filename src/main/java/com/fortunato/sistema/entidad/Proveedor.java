@@ -100,10 +100,6 @@ public class Proveedor {
     
     @Override
     public String toString() {
-        return "Proveedor{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", contacto='" + contacto + '\'' +
-                ", activo=" + activo+ '}';
+        return nombre != null ? nombre : "Sin proveedor";
     }
 }
