@@ -19,8 +19,11 @@ public class Proveedor {
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
     
-    @Column(name = "contacto", length = 255)
-    private String contacto;
+    @Column(name = "telefono", length = 255)
+    private Long telefono;
+
+    @Column(name = "mail", length = 255)
+    private String mail;
     
     @Column(name = "activo", nullable = false)
     private Boolean activo = true;
@@ -32,10 +35,10 @@ public class Proveedor {
     public Proveedor() {
     }
     
-    public Proveedor(String nombre, String contacto) {
+    public Proveedor(String nombre, Long telefono) {
         this();
         this.nombre = nombre;
-        this.contacto = contacto;
+        this.telefono = telefono;
     }
     
     // Getters y Setters
@@ -55,12 +58,20 @@ public class Proveedor {
         this.nombre = nombre;
     }
     
-    public String getContacto() {
-        return contacto;
+    public Long getTelefono() {
+        return telefono;
     }
     
-    public void setContacto(String contacto) {
-        this.contacto = contacto;
+    public void setTelefono(Long telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+    
+    public void setMail(String mail) {
+        this.mail = mail;
     }
     
     public Boolean getActivo() {

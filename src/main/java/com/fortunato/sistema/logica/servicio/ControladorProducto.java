@@ -32,7 +32,7 @@ public class ControladorProducto implements IControladorProducto {
     public Producto buscarProducto(Long id) {
         EntityManager em = em();
         try {
-            Producto producto = em.find(Producto.class, id); // Buscamos el producto, no se necesita transaction
+            Producto producto = em.createQuery("SELECT p FROM Producto p LEFT JOIN FETCH p.proveedor WHERE p.id = :id", Producto.class).setParameter("id", id).getSingleResult();
             return producto;
         } catch (Exception e) {
             throw new RuntimeException("Error al buscar producto", e);
@@ -45,7 +45,7 @@ public class ControladorProducto implements IControladorProducto {
     public List<Producto> listarProductos() {
         EntityManager em = em();
         try {
-            List<Producto> productos = em.createQuery("SELECT p FROM Producto p ORDER BY p.nombre", Producto.class).getResultList();
+            List<Producto> productos = em.createQuery("SELECT p FROM Producto p LEFT JOIN FETCH p.proveedor ORDER BY p.nombre", Producto.class).getResultList();
             return productos;
         } catch (Exception e) {
             throw new RuntimeException("Error al listar productos", e);
@@ -59,9 +59,12 @@ public class ControladorProducto implements IControladorProducto {
         EntityManager em = em();
         try {
             em.getTransaction().begin();
-            em.merge(producto);
+            em.merge(producto); //Merge es para actualizar el producto
             em.getTransaction().commit();
         } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
             throw new RuntimeException("Error al actualizar producto", e);
         } finally {
             em.close();

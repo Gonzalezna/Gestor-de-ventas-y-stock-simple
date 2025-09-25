@@ -34,10 +34,11 @@
         <property name="hibernate.connection.isolation">2</property>
         
         <!-- Mapeo de entidades -->
-        <mapping class="com.fortunato.sistema.modelo.Producto"/>
-        <mapping class="com.fortunato.sistema.modelo.Venta"/>
-        <mapping class="com.fortunato.sistema.modelo.DetalleVenta"/>
-        <mapping class="com.fortunato.sistema.modelo.Caja"/>
+        <mapping class="com.fortunato.sistema.entidad.Producto"/>
+        <mapping class="com.fortunato.sistema.entidad.Venta"/>
+        <mapping class="com.fortunato.sistema.entidad.DetalleVenta"/>
+        <mapping class="com.fortunato.sistema.entidad.Caja"/>
+        <mapping class="com.fortunato.sistema.entidad.Proveedor"/>
         
     </session-factory>
 </hibernate-configuration>

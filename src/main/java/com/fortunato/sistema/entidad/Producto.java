@@ -22,8 +22,11 @@ public class Producto {
     @Column(name = "descripcion", length = 255)
     private String descripcion;
     
-    @Column(name = "precio", nullable = false, precision = 10, scale = 2)
-    private BigDecimal precio;
+    @Column(name = "precio de compra", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precioCompra;
+
+    @Column(name = "precio de venta", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precioVenta;
     
     @Column(name = "stock", nullable = false)
     private Integer stock;
@@ -49,12 +52,13 @@ public class Producto {
         this.fechaCreacion = LocalDateTime.now();
     }
     
-    public Producto(Long id, String nombre, String descripcion, BigDecimal precio, Integer stock, String categoria) {
+    public Producto(Long id, String nombre, String descripcion, BigDecimal precioCompra, BigDecimal precioVenta, Integer stock, String categoria) {
         this();
         this.id = id; // Código de barras
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precio = precio;
+        this.precioCompra = precioCompra;
+        this.precioVenta = precioVenta;
         this.stock = stock;
         this.categoria = categoria;
     }
@@ -90,12 +94,20 @@ public class Producto {
         this.descripcion = descripcion;
     }
     
-    public BigDecimal getPrecio() {
-        return precio;
+    public BigDecimal getPrecioCompra() {
+        return precioCompra;
     }
     
-    public void setPrecio(BigDecimal precio) {
-        this.precio = precio;
+    public void setPrecioCompra(BigDecimal precioCompra) {
+        this.precioCompra = precioCompra;
+    }
+
+    public BigDecimal getPrecioVenta() {
+        return precioVenta;
+    }
+    
+    public void setPrecioVenta(BigDecimal precioVenta) {
+        this.precioVenta = precioVenta;
     }
     
     public Integer getStock() {
@@ -172,7 +184,8 @@ public class Producto {
         return "Producto{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", precio=" + precio +
+                ", precioCompra=" + precioCompra +
+                ", precioVenta=" + precioVenta +
                 ", stock=" + stock +
                 ", categoria='" + categoria + '\'' +
                 ", activo=" + activo +

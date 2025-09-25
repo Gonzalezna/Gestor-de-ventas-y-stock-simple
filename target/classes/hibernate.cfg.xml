@@ -8,8 +8,8 @@
         <!-- Configuración de la base de datos -->
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/kiosco_db?useSSL=false&amp;serverTimezone=UTC</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">password</property>
+        <property name="hibernate.connection.username">kiosco_user</property>
+        <property name="hibernate.connection.password">kiosco_password</property>
         
         <!-- Configuración del dialecto -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -30,10 +30,11 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         
         <!-- Mapeo de entidades -->
-        <mapping class="com.fortunato.sistema.modelo.Producto"/>
-        <mapping class="com.fortunato.sistema.modelo.Venta"/>
-        <mapping class="com.fortunato.sistema.modelo.DetalleVenta"/>
-        <mapping class="com.fortunato.sistema.modelo.Caja"/>
+        <mapping class="com.fortunato.sistema.entidad.Producto"/>
+        <mapping class="com.fortunato.sistema.entidad.Proveedor"/>
+        <mapping class="com.fortunato.sistema.entidad.Venta"/>
+        <mapping class="com.fortunato.sistema.entidad.DetalleVenta"/>
+        <mapping class="com.fortunato.sistema.entidad.Caja"/>
         
     </session-factory>
 </hibernate-configuration>

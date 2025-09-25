@@ -40,7 +40,7 @@ public class DetalleVenta {
         this.venta = venta;
         this.producto = producto;
         this.cantidad = cantidad;
-        this.precioUnitario = producto.getPrecio();
+        this.precioUnitario = producto.getPrecioVenta();
         this.subtotal = precioUnitario.multiply(BigDecimal.valueOf(cantidad));
     }
     

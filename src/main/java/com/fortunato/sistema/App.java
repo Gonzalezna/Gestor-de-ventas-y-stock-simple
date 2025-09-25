@@ -68,13 +68,13 @@ public class App {
             
             // Crear productos de prueba
             Producto producto1 = new Producto(1234567890123L, "Coca Cola 500ml", "Bebida gaseosa", 
-                new BigDecimal("150.00"), 50, "Bebidas");
+                new BigDecimal("100.00"), new BigDecimal("150.00"), 50, "Bebidas");
             
             Producto producto2 = new Producto(2345678901234L, "Galletas Oreo", "Galletas rellenas de crema", 
-                new BigDecimal("80.00"), 30, "Golosinas");
+                new BigDecimal("50.00"), new BigDecimal("80.00"), 30, "Golosinas");
             
             Producto producto3 = new Producto(3456789012345L, "Cigarrillos Marlboro", "Cigarrillos", 
-                new BigDecimal("450.00"), 20, "Tabaco");
+                new BigDecimal("300.00"), new BigDecimal("450.00"), 20, "Tabaco");
             
             session.persist(producto1);
             session.persist(producto2);

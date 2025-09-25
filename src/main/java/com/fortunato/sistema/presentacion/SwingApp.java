@@ -39,6 +39,9 @@ public class SwingApp extends JFrame {
         setSize(1000, 700);
         setLocationRelativeTo(null);
         setResizable(true);
+        
+        // Maximizar la ventana al abrir
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
     
     
@@ -89,6 +92,9 @@ public class SwingApp extends JFrame {
         
         // Pestaña de Productos
         tabbedPane.addTab("Productos", null, new ProductoPanel(), "Gestionar productos del kiosco");
+        
+        // Pestaña de Proveedores
+        tabbedPane.addTab("Proveedores", null, new ProveedorPanel(), "Gestionar proveedores del kiosco");
         
         // Pestañas futuras (placeholder)
         JPanel ventasPanel = new JPanel();
