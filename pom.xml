@@ -24,6 +24,13 @@
     </properties>
     
     <dependencies>
+        <!-- Jakarta Persistence API -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        
         <!-- Hibernate Core -->
         <dependency>
             <groupId>org.hibernate.orm</groupId>
@@ -78,6 +85,16 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>
+            </plugin>
+            
+            <!-- Plugin para ejecutar la aplicación -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>com.fortunato.sistema.presentacion.SwingApp</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>

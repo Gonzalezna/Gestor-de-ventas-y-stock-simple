@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 public class Producto {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @PrimaryKeyJoinColumn
     @Column(name = "id_producto")
-    private Long id;
+    private Long id; // Este será el código de barras
     
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
@@ -22,20 +22,17 @@ public class Producto {
     @Column(name = "descripcion", length = 255)
     private String descripcion;
     
-    @Column(name = "precio", nullable = false, precision = 10, scale = 2)
-    private BigDecimal precio;
+    @Column(name = "precio_compra", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precioCompra;
+
+    @Column(name = "precio_venta", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precioVenta;
     
     @Column(name = "stock", nullable = false)
     private Integer stock;
     
-    @Column(name = "stock_minimo")
-    private Integer stockMinimo;
-    
     @Column(name = "categoria", length = 50)
     private String categoria;
-    
-    @Column(name = "codigo_barras", length = 20, unique = true)
-    private String codigoBarras;
     
     @Column(name = "activo", nullable = false)
     private Boolean activo = true;
@@ -47,7 +44,7 @@ public class Producto {
     private LocalDateTime fechaModificacion;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_proveedor", nullable = false)
+    @JoinColumn(name = "id_proveedor", nullable = true)
     private Proveedor proveedor;
     
     // Constructores
@@ -55,11 +52,13 @@ public class Producto {
         this.fechaCreacion = LocalDateTime.now();
     }
     
-    public Producto(String nombre, String descripcion, BigDecimal precio, Integer stock, String categoria) {
+    public Producto(Long id, String nombre, String descripcion, BigDecimal precioCompra, BigDecimal precioVenta, Integer stock, String categoria) {
         this();
+        this.id = id; // Código de barras
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precio = precio;
+        this.precioCompra = precioCompra;
+        this.precioVenta = precioVenta;
         this.stock = stock;
         this.categoria = categoria;
     }
@@ -95,12 +94,20 @@ public class Producto {
         this.descripcion = descripcion;
     }
     
-    public BigDecimal getPrecio() {
-        return precio;
+    public BigDecimal getPrecioCompra() {
+        return precioCompra;
     }
     
-    public void setPrecio(BigDecimal precio) {
-        this.precio = precio;
+    public void setPrecioCompra(BigDecimal precioCompra) {
+        this.precioCompra = precioCompra;
+    }
+
+    public BigDecimal getPrecioVenta() {
+        return precioVenta;
+    }
+    
+    public void setPrecioVenta(BigDecimal precioVenta) {
+        this.precioVenta = precioVenta;
     }
     
     public Integer getStock() {
@@ -111,28 +118,12 @@ public class Producto {
         this.stock = stock;
     }
     
-    public Integer getStockMinimo() {
-        return stockMinimo;
-    }
-    
-    public void setStockMinimo(Integer stockMinimo) {
-        this.stockMinimo = stockMinimo;
-    }
-    
     public String getCategoria() {
         return categoria;
     }
     
     public void setCategoria(String categoria) {
         this.categoria = categoria;
-    }
-    
-    public String getCodigoBarras() {
-        return codigoBarras;
-    }
-    
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
     }
     
     public Boolean getActivo() {
@@ -173,7 +164,7 @@ public class Producto {
     }
     
     public boolean necesitaReposicion() {
-        return stockMinimo != null && stock <= stockMinimo;
+        return stock <= 3;
     }
     
     public void reducirStock(int cantidad) {
@@ -187,13 +178,18 @@ public class Producto {
     public void aumentarStock(int cantidad) {
         stock += cantidad;
     }
+
+    public int stockActual() {
+        return stock;
+    }
     
     @Override
     public String toString() {
         return "Producto{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", precio=" + precio +
+                ", precioCompra=" + precioCompra +
+                ", precioVenta=" + precioVenta +
                 ", stock=" + stock +
                 ", categoria='" + categoria + '\'' +
                 ", activo=" + activo +

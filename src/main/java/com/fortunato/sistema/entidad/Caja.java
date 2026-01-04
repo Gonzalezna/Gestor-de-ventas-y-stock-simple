@@ -114,7 +114,15 @@ public class Caja {
         this.fechaCierre = null;
         this.saldoActual = this.saldoInicial;
     }
+
+    public void añadirDineroCaja(BigDecimal dinero) {
+        this.saldoActual = this.saldoActual.add(dinero);
+    }
     
+    public void retirarDineroCaja(BigDecimal dinero) {
+        this.saldoActual = this.saldoActual.subtract(dinero);
+    }
+
     public void cerrar() {
         this.estado = false;
         this.fechaCierre = LocalDateTime.now();
@@ -125,11 +133,6 @@ public class Caja {
                 .filter(v -> v.getFecha() != null)
                 .map(Venta::getTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-    
-    public void agregarVenta(Venta venta) {
-        ventas.add(venta);
-        venta.setCaja(this);
     }
     
     public BigDecimal getDiferencia() {

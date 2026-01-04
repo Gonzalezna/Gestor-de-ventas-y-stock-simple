@@ -67,20 +67,14 @@ public class App {
             session.beginTransaction();
             
             // Crear productos de prueba
-            Producto producto1 = new Producto("Coca Cola 500ml", "Bebida gaseosa", 
-                new BigDecimal("150.00"), 50, "Bebidas");
-            producto1.setCodigoBarras("1234567890123");
-            producto1.setStockMinimo(10);
+            Producto producto1 = new Producto(1234567890123L, "Coca Cola 500ml", "Bebida gaseosa", 
+                new BigDecimal("100.00"), new BigDecimal("150.00"), 50, "Bebidas");
             
-            Producto producto2 = new Producto("Galletas Oreo", "Galletas rellenas de crema", 
-                new BigDecimal("80.00"), 30, "Golosinas");
-            producto2.setCodigoBarras("2345678901234");
-            producto2.setStockMinimo(5);
+            Producto producto2 = new Producto(2345678901234L, "Galletas Oreo", "Galletas rellenas de crema", 
+                new BigDecimal("50.00"), new BigDecimal("80.00"), 30, "Golosinas");
             
-            Producto producto3 = new Producto("Cigarrillos Marlboro", "Cigarrillos", 
-                new BigDecimal("450.00"), 20, "Tabaco");
-            producto3.setCodigoBarras("3456789012345");
-            producto3.setStockMinimo(3);
+            Producto producto3 = new Producto(3456789012345L, "Cigarrillos Marlboro", "Cigarrillos", 
+                new BigDecimal("300.00"), new BigDecimal("450.00"), 20, "Tabaco");
             
             session.persist(producto1);
             session.persist(producto2);

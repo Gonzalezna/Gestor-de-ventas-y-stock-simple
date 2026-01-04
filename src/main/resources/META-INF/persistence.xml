@@ -8,18 +8,18 @@
     <persistence-unit name="kiosco-persistence-unit">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         
-        <class>com.fortunato.sistema.persistencia.entidad.Producto</class>
-        <class>com.fortunato.sistema.persistencia.entidad.Venta</class>
-        <class>com.fortunato.sistema.persistencia.entidad.DetalleVenta</class>
-        <class>com.fortunato.sistema.persistencia.entidad.Caja</class>
-        <class>com.fortunato.sistema.persistencia.entidad.Proveedor</class>
+        <class>com.fortunato.sistema.entidad.Producto</class>
+        <class>com.fortunato.sistema.entidad.Venta</class>
+        <class>com.fortunato.sistema.entidad.DetalleVenta</class>
+        <class>com.fortunato.sistema.entidad.Caja</class>
+        <class>com.fortunato.sistema.entidad.Proveedor</class>
         
         <properties>
             <!-- Configuración de la base de datos -->
             <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/kiosco_db?useSSL=false&amp;serverTimezone=UTC"/>
-            <property name="hibernate.connection.username" value="root"/>
-            <property name="hibernate.connection.password" value="password"/>
+            <property name="hibernate.connection.username" value="kiosco_user"/>
+            <property name="hibernate.connection.password" value="kiosco_password"/>
             
             <!-- Configuración del dialecto -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
