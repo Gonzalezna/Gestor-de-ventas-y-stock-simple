@@ -22,10 +22,10 @@ public class Producto {
     @Column(name = "descripcion", length = 255)
     private String descripcion;
     
-    @Column(name = "precio de compra", nullable = false, precision = 10, scale = 2)
+    @Column(name = "precio_compra", nullable = false, precision = 10, scale = 2)
     private BigDecimal precioCompra;
 
-    @Column(name = "precio de venta", nullable = false, precision = 10, scale = 2)
+    @Column(name = "precio_venta", nullable = false, precision = 10, scale = 2)
     private BigDecimal precioVenta;
     
     @Column(name = "stock", nullable = false)
@@ -177,6 +177,10 @@ public class Producto {
     
     public void aumentarStock(int cantidad) {
         stock += cantidad;
+    }
+
+    public int stockActual() {
+        return stock;
     }
     
     @Override

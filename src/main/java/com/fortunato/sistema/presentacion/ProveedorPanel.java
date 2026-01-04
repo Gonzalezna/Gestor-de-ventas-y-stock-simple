@@ -582,6 +582,10 @@ public class ProveedorPanel extends JPanel {
         ventana.setVisible(true);
     }
     
+    public void recargarTabla() {
+        actualizarTabla();
+    }
+    
     public void actualizarTabla() {
         modelo.setRowCount(0); // Limpiar tabla
         cargarDatosDePrueba(); // Recargar datos

@@ -25,7 +25,7 @@ public class DetalleVenta {
     
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
-    
+
     @Column(name = "precio_unitario", nullable = false, precision = 10, scale = 2)
     private BigDecimal precioUnitario;
     
@@ -103,7 +103,11 @@ public class DetalleVenta {
     public void setSubtotal(BigDecimal subtotal) {
         this.subtotal = subtotal;
     }
-    
+
+    public void reducirStockDV() {
+        producto.reducirStock(cantidad);
+    }
+
     @Override
     public String toString() {
         return "DetalleVenta{" +

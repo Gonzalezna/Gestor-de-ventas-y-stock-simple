@@ -90,30 +90,42 @@ public class SwingApp extends JFrame {
         tabbedPane.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         tabbedPane.setBackground(COLOR_FONDO);
         
+        // Crear paneles
+        ProductoPanel productoPanel = new ProductoPanel();
+        ProveedorPanel proveedorPanel = new ProveedorPanel();
+        CajaPanel cajaPanel = new CajaPanel();
+        VentasPanel ventasPanel = new VentasPanel();
+        
         // Pestaña de Productos
-        tabbedPane.addTab("Productos", null, new ProductoPanel(), "Gestionar productos del kiosco");
+        tabbedPane.addTab("Productos", null, productoPanel, "Gestionar productos del kiosco");
         
         // Pestaña de Proveedores
-        tabbedPane.addTab("Proveedores", null, new ProveedorPanel(), "Gestionar proveedores del kiosco");
+        tabbedPane.addTab("Proveedores", null, proveedorPanel, "Gestionar proveedores del kiosco");
         
-        // Pestañas futuras (placeholder)
-        JPanel ventasPanel = new JPanel();
-        ventasPanel.setBackground(COLOR_FONDO);
-        JLabel ventasLabel = new JLabel("Panel de Ventas - Próximamente");
-        ventasLabel.setFont(new Font("Segoe UI", Font.ITALIC, 16));
-        ventasLabel.setForeground(Color.GRAY);
-        ventasLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ventasPanel.add(ventasLabel);
-        tabbedPane.addTab("Ventas", null, ventasPanel, "Gestionar ventas");
+        // Pestaña de Caja (Punto de Venta)
+        tabbedPane.addTab("Caja", null, cajaPanel, "Punto de venta y carrito");
         
-        JPanel cajaPanel = new JPanel();
-        cajaPanel.setBackground(COLOR_FONDO);
-        JLabel cajaLabel = new JLabel("Panel de Caja - Próximamente");
-        cajaLabel.setFont(new Font("Segoe UI", Font.ITALIC, 16));
-        cajaLabel.setForeground(Color.GRAY);
-        cajaLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        cajaPanel.add(cajaLabel);
-        tabbedPane.addTab("Caja", null, cajaPanel, "Gestionar caja registradora");
+        // Pestaña de Ventas (Historial)
+        tabbedPane.addTab("Ventas", null, ventasPanel, "Historial y reportes de ventas");
+        
+        // Listener para recargar datos cuando cambias de pestaña
+        tabbedPane.addChangeListener(e -> {
+            int selectedIndex = tabbedPane.getSelectedIndex();
+            String selectedTitle = tabbedPane.getTitleAt(selectedIndex);
+            
+            // Recargar tabla de productos cuando se selecciona esa pestaña
+            if (selectedTitle.equals("Productos")) {
+                productoPanel.recargarTabla();
+            }
+            // Recargar tabla de proveedores cuando se selecciona esa pestaña
+            else if (selectedTitle.equals("Proveedores")) {
+                proveedorPanel.recargarTabla();
+            }
+            // Recargar tabla de ventas cuando se selecciona esa pestaña
+            else if (selectedTitle.equals("Ventas")) {
+                ventasPanel.recargarTabla();
+            }
+        });
         
         return tabbedPane;
     }

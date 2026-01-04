@@ -611,6 +611,10 @@ public class ProductoPanel extends JPanel {
     }
     
     // Método público para actualizar la tabla desde ventanas externas
+    public void recargarTabla() {
+        actualizarTabla();
+    }
+    
     public void actualizarTabla() {
         cargarProductos();
     }

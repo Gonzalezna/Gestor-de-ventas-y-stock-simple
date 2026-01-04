@@ -3,11 +3,12 @@ package com.fortunato.sistema.entidad;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Entidad que representa una venta en el sistema de kiosco
+ * Entidad que representa una venta en el sistema del negocio
  */
 @Entity
 @Table(name = "ventas")
@@ -40,6 +41,16 @@ public class Venta {
     @Column(name = "total", nullable = false, precision = 10, scale = 2)
     private BigDecimal total = BigDecimal.ZERO;
     
+    @Column(name = "monto_pagado", precision = 10, scale = 2)
+    private BigDecimal montoPagado = BigDecimal.ZERO;
+    
+    @Column(name = "vuelto", precision = 10, scale = 2)
+    private BigDecimal vuelto = BigDecimal.ZERO;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "metodo_pago", nullable = false)
+    private MetodoPago metodoPago = MetodoPago.EFECTIVO;
+    
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
     private EstadoVenta estado = EstadoVenta.PENDIENTE;
@@ -47,9 +58,27 @@ public class Venta {
     @Column(name = "observaciones", length = 255)
     private String observaciones;
     
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_venta", nullable = false)
+    private TipoVenta tipo = TipoVenta.VENTA;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "venta_original_id")
+    private Venta ventaOriginal;
+    
     // Enum para los estados de venta
     public enum EstadoVenta {
         PENDIENTE, COMPLETADA, CANCELADA
+    }
+    
+    // Enum para el tipo de venta
+    public enum TipoVenta {
+        VENTA, DEVOLUCION
+    }
+    
+    // Enum para el método de pago
+    public enum MetodoPago {
+        EFECTIVO, DEBITO
     }
     
     // Constructores
@@ -128,6 +157,30 @@ public class Venta {
         this.total = total;
     }
     
+    public BigDecimal getMontoPagado() {
+        return montoPagado;
+    }
+    
+    public void setMontoPagado(BigDecimal montoPagado) {
+        this.montoPagado = montoPagado;
+    }
+    
+    public BigDecimal getVuelto() {
+        return vuelto;
+    }
+    
+    public void setVuelto(BigDecimal vuelto) {
+        this.vuelto = vuelto;
+    }
+    
+    public MetodoPago getMetodoPago() {
+        return metodoPago;
+    }
+    
+    public void setMetodoPago(MetodoPago metodoPago) {
+        this.metodoPago = metodoPago;
+    }
+    
     public EstadoVenta getEstado() {
         return estado;
     }
@@ -142,6 +195,22 @@ public class Venta {
     
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+    
+    public TipoVenta getTipo() {
+        return tipo;
+    }
+    
+    public void setTipo(TipoVenta tipo) {
+        this.tipo = tipo;
+    }
+    
+    public Venta getVentaOriginal() {
+        return ventaOriginal;
+    }
+    
+    public void setVentaOriginal(Venta ventaOriginal) {
+        this.ventaOriginal = ventaOriginal;
     }
     
     // Métodos de negocio
@@ -185,7 +254,24 @@ public class Venta {
     public void cancelar() {
         this.estado = EstadoVenta.CANCELADA;
     }
+
+    //Devuelve el precio de venta de un producto
+    public BigDecimal getPrecioVenta(Producto producto) {
+        return detalles.stream()
+                .filter(detalle -> detalle.getProducto().getId().equals(producto.getId()))
+                .map(DetalleVenta::getPrecioUnitario)
+                .findFirst()
+                .orElse(BigDecimal.ZERO);
+    }
     
+    //Devuelve los productos de una venta realizada
+    public int getProductoVendido(Producto producto) {
+        return detalles.stream()
+                .filter(detalle -> detalle.getProducto().getId().equals(producto.getId()))
+                .mapToInt(DetalleVenta::getCantidad).sum();
+    }
+    
+    //Devuelve la cantidad total de productos en la venta
     public int getCantidadTotalProductos() {
         return detalles.stream()
                 .mapToInt(DetalleVenta::getCantidad)
